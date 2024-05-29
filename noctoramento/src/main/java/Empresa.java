@@ -1,6 +1,12 @@
+import conexao.Conexao;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.util.List;
 
 public class Empresa {
+
+    Conexao conexao = new Conexao();
+    JdbcTemplate con = conexao.getConexaoMySql();
 
     private Integer id;
     private String razaoSocial;
@@ -14,6 +20,12 @@ public class Empresa {
         this.cnpj = cnpj;
         this.parametros = parametros;
         this.funcionarios = funcionarios;
+    }
+
+    public void registrarEmpresa(){
+
+
+
     }
 
     public Integer getId() {

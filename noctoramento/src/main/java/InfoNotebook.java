@@ -1,26 +1,40 @@
-public class Componente {
+import conexao.Conexao;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-    private Integer id;
-    private String fabricante;
-    private String modelo;
+public class InfoNotebook {
+
+    Conexao conexao = new Conexao();
+    JdbcTemplate con = conexao.getConexaoMySql();
+
+    private Integer id = 0;
     private String sistemaOperacional;
     private String processador;
     private Double capacidadeMaxCpu;
     private Double maxDisco;
     private Double maxMemoriaRam;
 
-    public Componente(Integer id, String fabricante, String modelo, String sistemaOperacional, String processador, Double capacidadeMaxCpu, Double maxDisco, Double maxMemoriaRam) {
-        this.id = id;
-        this.fabricante = fabricante;
-        this.modelo = modelo;
-        this.sistemaOperacional = sistemaOperacional;
-        this.processador = processador;
-        this.capacidadeMaxCpu = capacidadeMaxCpu;
-        this.maxDisco = maxDisco;
-        this.maxMemoriaRam = maxMemoriaRam;
+    public InfoNotebook() {
     }
 
-    public void atualizarComponentes(){
+    public void capturarInformacoesNotebook(Integer fkNotebook, Integer fkEmpresa){
+
+        String sistemaOperacional = null;
+        String processador = null;
+        Double capacidadeMaxCpu = null;
+        Double maxDisco = null;
+        Double maxMemoriaRam = null;
+        Integer fkNotebookInsert = fkNotebook;
+        Integer fkEmpresaInsert = fkEmpresa;
+
+        con.update("INSERT INTO RegistroUsoNotebook VALUES (null, ?, ?, ?, ?, ?, ?, ?)",
+                sistemaOperacional, processador, capacidadeMaxCpu, maxDisco, maxMemoriaRam, fkNotebookInsert, fkEmpresaInsert);
+
+        setId(id++);
+        setSistemaOperacional(sistemaOperacional);
+        setProcessador(processador);
+        setCapacidadeMaxCpu(capacidadeMaxCpu);
+        setMaxDisco(maxDisco);
+        setMaxMemoriaRam(maxMemoriaRam);
 
     }
 
@@ -30,22 +44,6 @@ public class Componente {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getFabricante() {
-        return fabricante;
-    }
-
-    public void setFabricante(String fabricante) {
-        this.fabricante = fabricante;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
     }
 
     public String getSistemaOperacional() {

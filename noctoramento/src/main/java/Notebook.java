@@ -1,23 +1,17 @@
+import javax.xml.crypto.Data;
 import java.util.List;
 
 public class Notebook {
 
     private Integer id;
     private String numeroSerie;
-    private String marca;
-    private Componente componentes;
+    private String fabricante;
+    private String modelo;
+    private Data dtRegistro;
+    private InfoNotebook infoNotebook;
     private List<Registro> registros;
 
-    public Notebook(Integer id, String numeroSerie, String marca, Componente componentes, List<Registro> registros) {
-        this.id = id;
-        this.numeroSerie = numeroSerie;
-        this.marca = marca;
-        this.componentes = componentes;
-        this.registros = registros;
-    }
-
-    public void atualizarComponentes(){
-
+    public Notebook() {
     }
 
     public Integer getId() {
@@ -36,20 +30,36 @@ public class Notebook {
         this.numeroSerie = numeroSerie;
     }
 
-    public String getMarca() {
-        return marca;
+    public String getFabricante() {
+        return fabricante;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setFabricante(String fabricante) {
+        this.fabricante = fabricante;
     }
 
-    public Componente getComponentes() {
-        return componentes;
+    public String getModelo() {
+        return modelo;
     }
 
-    public void setComponentes(Componente componentes) {
-        this.componentes = componentes;
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public Data getDtRegistro() {
+        return dtRegistro;
+    }
+
+    public void setDtRegistro(Data dtRegistro) {
+        this.dtRegistro = dtRegistro;
+    }
+
+    public InfoNotebook getInfoNotebook() {
+        return infoNotebook;
+    }
+
+    public void setInfoNotebook(InfoNotebook infoNotebook) {
+        this.infoNotebook = infoNotebook;
     }
 
     public List<Registro> getRegistros() {
