@@ -1,6 +1,6 @@
-import conexao.FuncionarioConexao;
-
 public class Funcionario {
+
+    FuncionarioConexao funcionarioConexao = new FuncionarioConexao();
 
     protected int id;
     protected String nome;
@@ -14,17 +14,18 @@ public class Funcionario {
         this.senha = senha;
     }
 
+    public Funcionario(){
+
+    }
+
     public Boolean funcionarioAlocado(String email){
 
         Boolean loginRealizado = false;
 
             // Conexão com banco da dados para sabermos qual usuário está alocado a está máquina
 
-            FuncionarioConexao funcionarioConexao = new FuncionarioConexao();
-
             Integer usuarioExistentes = funcionarioConexao.contarUsuarioExistente(email);
             if (usuarioExistentes == 1) {
-                System.out.println("Usuário alocado");
                 loginRealizado = true;
             } else {
                 System.out.println("\nEste email de funcionário não existe\n");
@@ -32,6 +33,20 @@ public class Funcionario {
             }
 
         return loginRealizado;
+
+    }
+
+    public void cadastrarFuncionario(String email){
+
+        Integer idFuncionario = funcionarioConexao.capturarIdFuncionario(email);
+        this.id = idFuncionario;
+
+    }
+
+    public Integer buscarNotebook(Integer idFuncionario, Integer idEmpresa){
+
+        Integer idNotebook = funcionarioConexao.capturarIdNotebook(idFuncionario, idEmpresa);
+        return idNotebook;
 
     }
 

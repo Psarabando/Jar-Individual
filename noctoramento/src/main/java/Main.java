@@ -1,14 +1,8 @@
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import com.github.britooo.looca.api.core.Looca;
-import com.github.britooo.looca.api.group.discos.Disco;
-import com.github.britooo.looca.api.group.discos.DiscoGrupo;
-import com.github.britooo.looca.api.group.processos.Processo;
-import com.github.britooo.looca.api.group.processos.ProcessoGrupo;
 import com.github.britooo.looca.api.group.sistema.Sistema;
-import conexao.Conexao;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class Main {
@@ -31,15 +25,18 @@ public class Main {
         System.out.println("\nSeja bem-vindo(a)\n");
 
         Boolean loginRealizado = false;
-        Suporte suporte = null;
+        Suporte suporte = new Suporte();
+
+        String email;
+        String senha;
 
         do {
             System.out.println("Insira seu email:");
-            String email = input.nextLine();
+            email = input.nextLine();
             // Variável onde será salvo o email do usuário
 
             System.out.println("Insira sua senha:");
-            String senha = input.nextLine();
+            senha = input.nextLine();
             // Variável onde será salva a senha, contendo pelo menos:
             // 8 caractéres, 1 caractere especial, 1 número e uma letra maiúscula
 
@@ -51,17 +48,23 @@ public class Main {
 
         System.out.println("""
                 \nLogin realizado com sucesso!
-                \n""");
+                """);
 
-        Empresa empresa = null;
-        empresa.registrarEmpresa();
+
+
+        // Criação da empresa, para conseguirmos pegar dados de outros objetos
+        Integer idEmpresa = suporte.buscarEmpresa(email, senha);
+        Empresa empresa = new Empresa(idEmpresa);
+
 
         Boolean funcionarioVerificado = false;
-        Funcionario funcionario = null;
+        Funcionario funcionario = new Funcionario();
+
+        String emailFuncionario;
 
         do {
             System.out.println("Insira o email do funcionário alocado a esta máquina:");
-            String emailFuncionario = input.nextLine();
+            emailFuncionario = input.nextLine();
 
             // Select que verifica se o email existe na empresa
 
@@ -73,24 +76,30 @@ public class Main {
 
         // Select que trará o número de série do notebook alocado ao usuário citado anteriormente:
 
-        System.out.println("""
-                \nFuncionário nomeFuncionario alocado com o Notebook numeroSerie 
-                
-                Iremos iniciar o monitoramento
-                \n""");
+        funcionario.cadastrarFuncionario(emailFuncionario);
 
-        //Notebook notebook = new Notebook();
-        //Parametros parametros = new Parametros();
-        Registro registro = new Registro();
+        Integer idNotebook = funcionario.buscarNotebook(funcionario.getId(), empresa.getId());
+        Notebook notebook = new Notebook(idNotebook);
+        notebook.setId(idNotebook);
 
         InfoNotebook infoNotebook = new InfoNotebook();
-        infoNotebook.capturarInformacoesNotebook(1, 1);
+        infoNotebook.capturarInformacoesNotebook(notebook.getId(), empresa.getId());
+
+        System.out.println("""
+                \nIremos iniciar o monitoramento
+                \n""");
+
+        Registro registro = new Registro();
+        ParametrosConexao parametrosConexao = new ParametrosConexao();
+        Parametros parametros = parametrosConexao.capturarParametros(empresa.getId());
+
+        System.out.println(parametros);
 
         do {
-            registro.capturarDados(1, 1);
+            registro.capturarDados(notebook.getId(), empresa.getId());
 
             try {
-                TimeUnit.SECONDS.sleep(20);
+                TimeUnit.SECONDS.sleep(20); //parametros.getTempoSegCapturaDeDados();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

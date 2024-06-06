@@ -1,8 +1,10 @@
-import conexao.Conexao;
+import com.github.britooo.looca.api.core.Looca;
+import com.github.britooo.looca.api.group.sistema.Sistema;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class InfoNotebook {
-
+    Looca looca = new Looca();
+    Sistema sistema = new Sistema();
     Conexao conexao = new Conexao();
     JdbcTemplate con = conexao.getConexaoMySql();
 
@@ -18,15 +20,16 @@ public class InfoNotebook {
 
     public void capturarInformacoesNotebook(Integer fkNotebook, Integer fkEmpresa){
 
-        String sistemaOperacional = null;
-        String processador = null;
-        Double capacidadeMaxCpu = null;
-        Double maxDisco = null;
-        Double maxMemoriaRam = null;
+        String sistemaOperacional = sistema.getSistemaOperacional();
+        String processador = looca.getProcessador().getNome();
+        double capacidadeMaxCpu = Math.round(looca.getProcessador().getUso().doubleValue());
+
+        double maxDisco = Math.round(looca.getGrupoDeDiscos().getTamanhoTotal().doubleValue() / Math.pow(1024,3));
+        double maxMemoriaRam = Math.round((looca.getMemoria().getTotal().doubleValue()) / Math.pow(1024,3));
         Integer fkNotebookInsert = fkNotebook;
         Integer fkEmpresaInsert = fkEmpresa;
 
-        con.update("INSERT INTO RegistroUsoNotebook VALUES (null, ?, ?, ?, ?, ?, ?, ?)",
+        con.update("INSERT INTO InfoNotebook VALUES (null, ?, ?, ?, ?, ?, ?, ?)",
                 sistemaOperacional, processador, capacidadeMaxCpu, maxDisco, maxMemoriaRam, fkNotebookInsert, fkEmpresaInsert);
 
         setId(id++);

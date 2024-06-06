@@ -1,4 +1,3 @@
-import conexao.Conexao;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -22,9 +21,13 @@ public class Empresa {
         this.funcionarios = funcionarios;
     }
 
+    public Empresa(Integer id){
+        this.id = id;
+    }
+
     public void registrarEmpresa(){
 
-
+        EmpresaConexao empresaConexao = new EmpresaConexao();
 
     }
 

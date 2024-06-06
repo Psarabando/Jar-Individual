@@ -1,6 +1,8 @@
 public class Parametros {
 
-    private Integer id;
+    ParametrosConexao parametrosConexao = new ParametrosConexao();
+
+    private Integer idParametros;
     private Integer tempoSegCapturaDeDados;
     private Integer tempoSegAlertas;
     private Double urgenteUsoCpu;
@@ -9,9 +11,10 @@ public class Parametros {
     private Double alertaUsoCpu;
     private Double alertaUsoDisco;
     private Double alertaUsoMemoriaRam;
+    private Integer fkEmpresa;
 
-    public Parametros(Integer id, Integer tempoSegCapturaDeDados, Integer tempoSegAlertas, Double urgenteUsoCpu, Double urgenteUsoDisco, Double urgenteUsoMemoriaRam, Double alertaUsoCpu, Double alertaUsoDisco, Double alertaUsoMemoriaRam) {
-        this.id = id;
+    public Parametros(Integer idParametros, Integer tempoSegCapturaDeDados, Integer tempoSegAlertas, Double urgenteUsoCpu, Double urgenteUsoDisco, Double urgenteUsoMemoriaRam, Double alertaUsoCpu, Double alertaUsoDisco, Double alertaUsoMemoriaRam) {
+        this.idParametros = idParametros;
         this.tempoSegCapturaDeDados = tempoSegCapturaDeDados;
         this.tempoSegAlertas = tempoSegAlertas;
         this.urgenteUsoCpu = urgenteUsoCpu;
@@ -22,20 +25,20 @@ public class Parametros {
         this.alertaUsoMemoriaRam = alertaUsoMemoriaRam;
     }
 
-    public void verificarDados(){
-
+    public Parametros(){
     }
+
 
     public void alertar(){
 
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getidParametros() {
+        return idParametros;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setidParametros(Integer id) {
+        this.idParametros = idParametros;
     }
 
     public Integer getTempoSegCapturaDeDados() {
@@ -100,5 +103,13 @@ public class Parametros {
 
     public void setAlertaUsoMemoriaRam(Double alertaUsoMemoriaRam) {
         this.alertaUsoMemoriaRam = alertaUsoMemoriaRam;
+    }
+
+    public Integer getFkEmpresa() {
+        return fkEmpresa;
+    }
+
+    public void setFkEmpresa(Integer fkEmpresa) {
+        this.fkEmpresa = fkEmpresa;
     }
 }

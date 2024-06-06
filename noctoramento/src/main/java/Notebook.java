@@ -11,7 +11,8 @@ public class Notebook {
     private InfoNotebook infoNotebook;
     private List<Registro> registros;
 
-    public Notebook() {
+    public Notebook(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {
