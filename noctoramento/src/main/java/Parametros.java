@@ -37,7 +37,7 @@ public class Parametros {
         return idParametros;
     }
 
-    public void setidParametros(Integer id) {
+    public void setidParametros(Integer idParametros) {
         this.idParametros = idParametros;
     }
 
@@ -111,5 +111,22 @@ public class Parametros {
 
     public void setFkEmpresa(Integer fkEmpresa) {
         this.fkEmpresa = fkEmpresa;
+    }
+
+    @Override
+    public String toString() {
+        return "Parametros{" +
+                "parametrosConexao=" + parametrosConexao +
+                ", idParametros=" + idParametros +
+                ", tempoSegCapturaDeDados=" + tempoSegCapturaDeDados +
+                ", tempoSegAlertas=" + tempoSegAlertas +
+                ", urgenteUsoCpu=" + urgenteUsoCpu +
+                ", urgenteUsoDisco=" + urgenteUsoDisco +
+                ", urgenteUsoMemoriaRam=" + urgenteUsoMemoriaRam +
+                ", alertaUsoCpu=" + alertaUsoCpu +
+                ", alertaUsoDisco=" + alertaUsoDisco +
+                ", alertaUsoMemoriaRam=" + alertaUsoMemoriaRam +
+                ", fkEmpresa=" + fkEmpresa +
+                '}';
     }
 }

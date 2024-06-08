@@ -22,8 +22,7 @@ public class InfoNotebook {
 
         String sistemaOperacional = sistema.getSistemaOperacional();
         String processador = looca.getProcessador().getNome();
-        double capacidadeMaxCpu = Math.round(looca.getProcessador().getUso().doubleValue());
-
+        double capacidadeMaxCpu = Math.round(looca.getProcessador().getFrequencia().doubleValue());
         double maxDisco = Math.round(looca.getGrupoDeDiscos().getTamanhoTotal().doubleValue() / Math.pow(1024,3));
         double maxMemoriaRam = Math.round((looca.getMemoria().getTotal().doubleValue()) / Math.pow(1024,3));
         Integer fkNotebookInsert = fkNotebook;

@@ -12,7 +12,7 @@ public class ParametrosConexao {
 
     public Parametros capturarParametros(Integer fkEmpresa){
 
-        String sql = "SELECT * FROM Parametros WHERE fkEmpresa = ?";
+        String sql = "SELECT * FROM Parametros WHERE fkEmpresa = ?;";
 
 
         try {

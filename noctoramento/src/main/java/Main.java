@@ -93,13 +93,11 @@ public class Main {
         ParametrosConexao parametrosConexao = new ParametrosConexao();
         Parametros parametros = parametrosConexao.capturarParametros(empresa.getId());
 
-        System.out.println(parametros);
-
         do {
             registro.capturarDados(notebook.getId(), empresa.getId());
 
             try {
-                TimeUnit.SECONDS.sleep(20); //parametros.getTempoSegCapturaDeDados();
+                TimeUnit.SECONDS.sleep(parametros.getTempoSegCapturaDeDados());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
