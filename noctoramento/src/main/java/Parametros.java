@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+
 public class Parametros {
 
     ParametrosConexao parametrosConexao = new ParametrosConexao();
@@ -35,36 +38,48 @@ public class Parametros {
         Boolean emitirAlerta = false;
 
         if (usoCpu > alertaUsoCpu && usoCpu < urgenteUsoCpu){
-            alerta += ("Cpu está em estado de alerta: " + usoCpu);
+            alerta += ("Cpu está em estado de alerta: " + usoCpu + "\n");
             emitirAlerta = true;
         } else if (usoCpu > alertaUsoCpu && usoCpu > urgenteUsoCpu){
-            alerta += ("Cpu está em estado crítico: " + usoCpu);
+            alerta += ("Cpu está em estado crítico: " + usoCpu + "\n");
             emitirAlerta = true;
         }
 
         if (usoDisco > alertaUsoDisco && usoDisco < urgenteUsoDisco){
-            alerta += ("Utilização do disco está em estado de alerta: " + usoDisco);
+            alerta += ("Utilização do disco está em estado de alerta: " + usoDisco + "\n");
             emitirAlerta = true;
         } else if (usoDisco > alertaUsoDisco && usoDisco > urgenteUsoDisco){
-            alerta += ("Utilização do disco está em estado crítico: " + usoDisco);
+            alerta += ("Utilização do disco está em estado crítico: " + usoDisco + "\n");
             emitirAlerta = true;
         }
 
         if (usoMemoriaRam > alertaUsoMemoriaRam && usoMemoriaRam < urgenteUsoMemoriaRam){
-            alerta += ("Utilização da memória RAM está em estado de alerta: " + usoMemoriaRam);
+            alerta += ("Utilização da memória RAM está em estado de alerta: " + usoMemoriaRam + "\n");
             emitirAlerta = true;
         } else if (usoMemoriaRam > alertaUsoMemoriaRam && usoMemoriaRam > urgenteUsoMemoriaRam){
-            alerta += ("Utilização da memória RAM está em estado crítico: " + usoMemoriaRam);
+            alerta += ("Utilização da memória RAM está em estado crítico: " + usoMemoriaRam + "\n");
             emitirAlerta = true;
         }
 
-        if (emitirAlerta){
-            System.out.println(alerta);
+        final String alertaFinal = alerta;
 
-            // Código para enviar notificação via slack
-            Slack.EnviarAlertaSlack(alerta);
+        if (emitirAlerta){
+
+            // Código para enviar notificação via slack e notificar no console
+
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+                try {
+                    System.out.println(alertaFinal);
+                    Slack.EnviarAlertaSlack(alertaFinal);
+                    Thread.sleep(tempoSegAlertas * 1000);
+                } catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            });
 
             // Insert no banco
+
+
 
         }
 
