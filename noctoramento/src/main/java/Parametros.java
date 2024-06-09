@@ -62,6 +62,7 @@ public class Parametros {
             System.out.println(alerta);
 
             // Código para enviar notificação via slack
+            Slack.EnviarAlertaSlack(alerta);
 
             // Insert no banco
 

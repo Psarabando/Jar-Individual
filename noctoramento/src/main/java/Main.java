@@ -1,8 +1,13 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.sistema.Sistema;
+import logs.Log;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class Main {
@@ -44,6 +49,24 @@ public class Main {
 
             if (suporte.login(email, senha)) {
                 loginRealizado = true;
+            } else {
+                // Se as credenciais estiverem incorretas, solicita ao usuário que tente novamente
+                System.out.println("Email ou senha incorretos. Tente novamente.");
+                String data = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss.SSS").format(new Date());
+                String logLevel = "ERROR";
+                Integer statusCode = 401;
+                String mensagem = "Erro ao logar, e-mail ou senha incorretos";
+                String sistemaOperacional =  looca.getSistema().getSistemaOperacional();
+                Integer arquitetura = looca.getSistema().getArquitetura();
+
+                Log errorLogin = new Log(data, logLevel, statusCode, mensagem, sistemaOperacional, arquitetura);
+                try(FileWriter writer = new FileWriter(".\\logLogin.txt", true)){
+                    writer.write(errorLogin.toString().replace("Id Máquina: null\n", "").replace("Host Name: null\n", "").replace("Stack Trace: null\n", ""));
+                }catch(IOException e){
+                    System.err.println("Erro ao gerar log" + e.getMessage());
+
+                }
+
             }
         } while (!loginRealizado);
         // Loop do login, fazendo com que o usuário fique "preso" até inserir email e senha cadastrados
@@ -93,6 +116,8 @@ public class Main {
         Registro registro = new Registro();
         ParametrosConexao parametrosConexao = new ParametrosConexao();
         Parametros parametros = parametrosConexao.capturarParametros(empresa.getIdEmpresa());
+
+        Reboot.Desligar(infoNotebook.getSistemaOperacional());
 
         do {
             registro.capturarDados(notebook.getIdNotebook(), empresa.getIdEmpresa());

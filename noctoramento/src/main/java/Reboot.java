@@ -1,36 +1,24 @@
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 public class Reboot {
-    public static void main(String[] args) {
-        // Intervalo de tempo em milissegundos antes de reiniciar (por exemplo, 5 minutos)
-        long intervalo = 1 * 60 * 10; // 5 minutos
-        // Laço infinito para reiniciar a máquina em intervalos regulares
-        while (true) {
-            try {
-                // Espera pelo intervalo especificado
-                Thread.sleep(intervalo);
-                // Reinicia a máquina executando o comando de reinicialização do sistema
-                rebootLinux();
-            } catch (InterruptedException e) {
-                // e.printStackTrace();
+    public static void Desligar(String so) {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            if (so.equalsIgnoreCase("windows")) {
+                try {
+                    Thread.sleep(10); // Simula uma operação assíncrona
+                    Process processo = Runtime.getRuntime().exec("shutdown /r /t 0");
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-    }
-    // Método para reiniciar a máquina Linux
-    private static void rebootLinux() {
-        try {
-            // Executa o comando de reinicialização do sistema usando o comando "shutdown"
-            Process processo = Runtime.getRuntime().exec("shutdown /r /t 0");
-            // Espera o término do processo
-            processo.waitFor();
-            // Verifica se o reinício foi bem-sucedido
-            int exitCode = processo.exitValue();
-            if (exitCode == 0) {
-                System.out.println("Máquina reiniciada com sucesso.");
-            } else {
-                System.err.println("Falha ao reiniciar a máquina. Código de saída: " + exitCode);
+            if (so.equalsIgnoreCase("linux") || so.equalsIgnoreCase("mac")){
+                try {
+                    Thread.sleep(2000); // Simula uma operação assíncrona
+                    Process processo = Runtime.getRuntime().exec("shutdown -P now");
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException | InterruptedException e) {
-            // e.printStackTrace();
-        }
+        });
     }
 }
