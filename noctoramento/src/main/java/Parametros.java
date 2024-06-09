@@ -1,8 +1,12 @@
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 public class Parametros {
 
+    Conexao conexao = new Conexao();
+    JdbcTemplate con = conexao.getConexaoMySql();
     ParametrosConexao parametrosConexao = new ParametrosConexao();
 
     private Integer idParametros;
@@ -32,7 +36,7 @@ public class Parametros {
     }
 
 
-    public void alertar(Double usoCpu, Double usoDisco, Double usoMemoriaRam){
+    public void alertar(Double usoCpu, Double usoDisco, Double usoMemoriaRam, Integer fkRegistro, Integer fkNotebook){
 
         String alerta = "";
         Boolean emitirAlerta = false;
@@ -77,12 +81,23 @@ public class Parametros {
                 }
             });
 
-            // Insert no banco
+            // Insert no banco mysql
+
+            con.update("INSERT INTO Alerta (fkParametros, fkEmpresaParametros) VALUES (?, ?);",
+                    idParametros, fkEmpresa);
+
+            // Insert no SQL Server
 
 
 
         }
 
+    }
+
+    public void insertParametros (){
+        con.update("INSERT INTO Parametros (tempoSegCapturaDeDados, tempoSegAlertas, urgenteUsoCpu, urgenteUsoDisco, urgenteUsoMemoriaRam,\n" +
+                        "    alertaUsoCpu, alertaUsoDisco, alertaUsoMemoriaRam, fkEmpresa) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                tempoSegCapturaDeDados, tempoSegAlertas, urgenteUsoCpu, urgenteUsoDisco, urgenteUsoMemoriaRam, alertaUsoCpu, alertaUsoDisco, alertaUsoMemoriaRam, fkEmpresa);
     }
 
     public Integer getidParametros() {

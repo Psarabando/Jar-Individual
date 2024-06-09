@@ -28,8 +28,16 @@ public class InfoNotebook {
         Integer fkNotebookInsert = fkNotebook;
         Integer fkEmpresaInsert = fkEmpresa;
 
+        // Insert no mysql Local
+
         con.update("INSERT INTO InfoNotebook VALUES (null, ?, ?, ?, ?, ?, ?, ?)",
                 sistemaOperacional, processador, capacidadeMaxCpu, maxDisco, maxMemoriaRam, fkNotebookInsert, fkEmpresaInsert);
+
+        // Insert no SQL Server
+
+
+
+        // Cadastrando os dados:
 
         setId(id++);
         setSistemaOperacional(sistemaOperacional);

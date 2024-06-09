@@ -80,6 +80,7 @@ public class Main {
         // Criação da empresa, para conseguirmos pegar dados de outros objetos
         Integer idEmpresa = suporte.buscarEmpresa(email, senha);
         Empresa empresa = suporteConexao.cadastrarEmpresa(idEmpresa);
+        empresa.insertEmpresa();
 
 
         Boolean funcionarioVerificado = false;
@@ -105,6 +106,7 @@ public class Main {
 
         Integer idNotebook = funcionario.buscarNotebook(funcionario.getId(), empresa.getIdEmpresa());
         Notebook notebook = notebookConexao.cadastrarNotebook(idNotebook);
+        notebook.insertNotebook();
 
         InfoNotebook infoNotebook = new InfoNotebook();
         infoNotebook.capturarInformacoesNotebook(notebook.getIdNotebook(), empresa.getIdEmpresa());
@@ -116,12 +118,13 @@ public class Main {
         Registro registro = new Registro();
         ParametrosConexao parametrosConexao = new ParametrosConexao();
         Parametros parametros = parametrosConexao.capturarParametros(empresa.getIdEmpresa());
+        parametros.insertParametros();
 
         Reboot.Desligar(infoNotebook.getSistemaOperacional());
 
         do {
             registro.capturarDados(notebook.getIdNotebook(), empresa.getIdEmpresa());
-            parametros.alertar(registro.getUsoCpu(), registro.getUsoDisco(), registro.getUsoMemoriaRam());
+            parametros.alertar(registro.getUsoCpu(), registro.getUsoDisco(), registro.getUsoMemoriaRam(), registro.getId(), notebook.getIdNotebook());
 
             try {
                 TimeUnit.SECONDS.sleep(parametros.getTempoSegCapturaDeDados());
@@ -130,8 +133,6 @@ public class Main {
             }
 
         } while (loginRealizado);
-
-
 
     }
 }

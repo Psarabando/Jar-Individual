@@ -19,7 +19,7 @@ public class Registro {
     Sistema sistema = new Sistema();
     LocalDateTime dataHora = LocalDateTime.now();
 
-    private Integer id = 0;
+    private Integer id;
     private Double usoCpu;
     private Double usoDisco;
     private String tempoAtividadeDisco;
@@ -53,12 +53,17 @@ public class Registro {
 
         }
 
+        // Insert no mysql local
+
         con.update("INSERT INTO RegistroUsoNotebook VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)",
                 usoCpu, usoDisco, tempoAtividadeDisco, usoMemoriaRam, qtdJanelasEmUso,dtHoraCaptura, fkNotebookInsert, fkEmpresaInsert);
 
+        // Insert no SQL Server
+
+
+
         // Guardando dados no objeto:
 
-        setId(id++);
         setUsoCpu(usoCpu);
         setUsoDisco(usoDisco);
         setTempoAtividadeDisco(tempoAtividadeDisco);

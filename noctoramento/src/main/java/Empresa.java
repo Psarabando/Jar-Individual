@@ -38,6 +38,11 @@ public class Empresa {
     public Empresa() {
     }
 
+    public void insertEmpresa(){
+        con.update("INSERT INTO Empresa (razaoSocial, cnpjEmpresa, email, senha) VALUES (?, ?, ?, ?);",
+                razaoSocial, cnpjEmpresa, email, senha);
+    }
+
     public Integer getIdEmpresa() {
         return idEmpresa;
     }

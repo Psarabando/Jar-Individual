@@ -1,8 +1,13 @@
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import javax.xml.crypto.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Notebook {
+
+    Conexao conexaoMySQL = new Conexao();
+    JdbcTemplate con = conexaoMySQL.getConexaoMySql();
 
     private Integer idNotebook;
     private String numeroSerie;
@@ -34,6 +39,11 @@ public class Notebook {
     }
 
     public Notebook() {
+    }
+
+    public void insertNotebook(){
+        con.update("INSERT INTO Notebook (numeroSerie, fabricante, modelo, fkEmpresa) VALUES (?, ?, ?, ?);",
+                numeroSerie, fabricante, modelo, fkEmpresa);
     }
 
     public Integer getIdNotebook() {
