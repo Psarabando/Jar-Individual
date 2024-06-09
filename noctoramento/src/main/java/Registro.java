@@ -68,30 +68,7 @@ public class Registro {
 
         // Exibição dos dados na tela
 
-        System.out.println(looca.getMemoria());
-
-        //Criação do gerenciador - Discos
-        DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
-
-        //Obtendo lista de discos a partir do getter
-
-        for (Disco disco : discos) {
-            System.out.println(disco);
-        }
-
-        System.out.println("Total de janelas em uso:");
-        System.out.println(looca.getGrupoDeJanelas().getTotalJanelas());
-
-        //Processos
-        System.out.println("aqui 2");
-        ProcessoGrupo grupoDeProcessos = looca.getGrupoDeProcessos();
-
-
-        List<Processo> processos = grupoDeProcessos.getProcessos();
-
-        for (Processo processo : processos) {
-            System.out.println(processo.getNome() + processo.getBytesUtilizados());
-        }
+        System.out.println(toString());
 
     }
 
@@ -149,5 +126,15 @@ public class Registro {
 
     public void setDtHoraCaptura(LocalDateTime dtHoraCaptura) {
         this.dtHoraCaptura = dtHoraCaptura;
+    }
+
+    @Override
+    public String toString() {
+        return  "usoCpu=" + usoCpu +
+                ", usoDisco=" + usoDisco +
+                ", tempoAtividadeDisco='" + tempoAtividadeDisco + '\'' +
+                ", usoMemoriaRam=" + usoMemoriaRam +
+                ", qtdJanelasEmUso=" + qtdJanelasEmUso +
+                ", dtHoraCaptura=" + dtHoraCaptura + "\n";
     }
 }

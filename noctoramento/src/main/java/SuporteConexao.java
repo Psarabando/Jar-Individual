@@ -1,3 +1,4 @@
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.SQLException;
@@ -38,6 +39,28 @@ public class SuporteConexao {
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
+        } finally {
+            if (con != null){
+                try{
+                    con.getDataSource().getConnection().close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public Empresa cadastrarEmpresa(Integer idEmpresa){
+
+        String sql = "SELECT * FROM Empresa WHERE idEmpresa = ?;";
+
+        try {
+            Empresa empresa = con.queryForObject(sql, new BeanPropertyRowMapper<>(Empresa.class), idEmpresa);
+            return empresa;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         } finally {
             if (con != null){
                 try{

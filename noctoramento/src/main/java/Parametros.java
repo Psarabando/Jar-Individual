@@ -29,7 +29,43 @@ public class Parametros {
     }
 
 
-    public void alertar(){
+    public void alertar(Double usoCpu, Double usoDisco, Double usoMemoriaRam){
+
+        String alerta = "";
+        Boolean emitirAlerta = false;
+
+        if (usoCpu > alertaUsoCpu && usoCpu < urgenteUsoCpu){
+            alerta += ("Cpu está em estado de alerta: " + usoCpu);
+            emitirAlerta = true;
+        } else if (usoCpu > alertaUsoCpu && usoCpu > urgenteUsoCpu){
+            alerta += ("Cpu está em estado crítico: " + usoCpu);
+            emitirAlerta = true;
+        }
+
+        if (usoDisco > alertaUsoDisco && usoDisco < urgenteUsoDisco){
+            alerta += ("Utilização do disco está em estado de alerta: " + usoDisco);
+            emitirAlerta = true;
+        } else if (usoDisco > alertaUsoDisco && usoDisco > urgenteUsoDisco){
+            alerta += ("Utilização do disco está em estado crítico: " + usoDisco);
+            emitirAlerta = true;
+        }
+
+        if (usoMemoriaRam > alertaUsoMemoriaRam && usoMemoriaRam < urgenteUsoMemoriaRam){
+            alerta += ("Utilização da memória RAM está em estado de alerta: " + usoMemoriaRam);
+            emitirAlerta = true;
+        } else if (usoMemoriaRam > alertaUsoMemoriaRam && usoMemoriaRam > urgenteUsoMemoriaRam){
+            alerta += ("Utilização da memória RAM está em estado crítico: " + usoMemoriaRam);
+            emitirAlerta = true;
+        }
+
+        if (emitirAlerta){
+            System.out.println(alerta);
+
+            // Código para enviar notificação via slack
+
+            // Insert no banco
+
+        }
 
     }
 

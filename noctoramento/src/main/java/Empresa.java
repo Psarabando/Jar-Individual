@@ -7,36 +7,43 @@ public class Empresa {
     Conexao conexao = new Conexao();
     JdbcTemplate con = conexao.getConexaoMySql();
 
-    private Integer id;
+    private Integer idEmpresa;
     private String razaoSocial;
-    private String cnpj;
+    private String cnpjEmpresa;
+    private String email;
+    private String senha;
     private Parametros parametros;
     private List<Funcionario> funcionarios;
 
-    public Empresa(Integer id, String razaoSocial, String cnpj, Parametros parametros, List<Funcionario> funcionarios) {
-        this.id = id;
+    public Empresa(Integer idEmpresa, String razaoSocial, String cnpjEmpresa, String email, String senha) {
+        this.idEmpresa = idEmpresa;
         this.razaoSocial = razaoSocial;
-        this.cnpj = cnpj;
+        this.cnpjEmpresa = cnpjEmpresa;
+        this.email = email;
+        this.senha = senha;
+    }
+
+    public Empresa(Conexao conexao, JdbcTemplate con, Integer idEmpresa, String razaoSocial, String cnpjEmpresa, String email, String senha, Parametros parametros, List<Funcionario> funcionarios) {
+        this.conexao = conexao;
+        this.con = con;
+        this.idEmpresa = idEmpresa;
+        this.razaoSocial = razaoSocial;
+        this.cnpjEmpresa = cnpjEmpresa;
+        this.email = email;
+        this.senha = senha;
         this.parametros = parametros;
         this.funcionarios = funcionarios;
     }
 
-    public Empresa(Integer id){
-        this.id = id;
+    public Empresa() {
     }
 
-    public void registrarEmpresa(){
-
-        EmpresaConexao empresaConexao = new EmpresaConexao();
-
+    public Integer getIdEmpresa() {
+        return idEmpresa;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdEmpresa(Integer idEmpresa) {
+        this.idEmpresa = idEmpresa;
     }
 
     public String getRazaoSocial() {
@@ -47,27 +54,38 @@ public class Empresa {
         this.razaoSocial = razaoSocial;
     }
 
-    public String getCnpj() {
-        return cnpj;
+    public String getCnpjEmpresa() {
+        return cnpjEmpresa;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    public void setCnpjEmpresa(String cnpjEmpresa) {
+        this.cnpjEmpresa = cnpjEmpresa;
     }
 
-    public Parametros getParametros() {
-        return parametros;
+    public String getEmail() {
+        return email;
     }
 
-    public void setParametros(Parametros parametros) {
-        this.parametros = parametros;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public List<Funcionario> getFuncionarios() {
-        return funcionarios;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setFuncionarios(List<Funcionario> funcionarios) {
-        this.funcionarios = funcionarios;
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    @Override
+    public String toString() {
+        return "Empresa{" +
+                "idEmpresa=" + idEmpresa +
+                ", razaoSocial='" + razaoSocial + '\'' +
+                ", cnpjEmpresa='" + cnpjEmpresa + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
     }
 }

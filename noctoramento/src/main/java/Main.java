@@ -12,6 +12,8 @@ public class Main {
         Scanner input = new Scanner(System.in);
         Conexao conexao = new Conexao();
         JdbcTemplate con = conexao.getConexaoMySql();
+        SuporteConexao suporteConexao = new SuporteConexao();
+        NotebookConexao notebookConexao = new NotebookConexao();
 
 
         System.out.println("╭━╮╱╭╮╱╱╱╱╱╱╱╱╱╭╮╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭╮╱╱╱╱╱\n" +
@@ -54,7 +56,7 @@ public class Main {
 
         // Criação da empresa, para conseguirmos pegar dados de outros objetos
         Integer idEmpresa = suporte.buscarEmpresa(email, senha);
-        Empresa empresa = new Empresa(idEmpresa);
+        Empresa empresa = suporteConexao.cadastrarEmpresa(idEmpresa);
 
 
         Boolean funcionarioVerificado = false;
@@ -78,12 +80,11 @@ public class Main {
 
         funcionario.cadastrarFuncionario(emailFuncionario);
 
-        Integer idNotebook = funcionario.buscarNotebook(funcionario.getId(), empresa.getId());
-        Notebook notebook = new Notebook(idNotebook);
-        notebook.setId(idNotebook);
+        Integer idNotebook = funcionario.buscarNotebook(funcionario.getId(), empresa.getIdEmpresa());
+        Notebook notebook = notebookConexao.cadastrarNotebook(idNotebook);
 
         InfoNotebook infoNotebook = new InfoNotebook();
-        infoNotebook.capturarInformacoesNotebook(notebook.getId(), empresa.getId());
+        infoNotebook.capturarInformacoesNotebook(notebook.getIdNotebook(), empresa.getIdEmpresa());
 
         System.out.println("""
                 \nIremos iniciar o monitoramento
@@ -91,10 +92,11 @@ public class Main {
 
         Registro registro = new Registro();
         ParametrosConexao parametrosConexao = new ParametrosConexao();
-        Parametros parametros = parametrosConexao.capturarParametros(empresa.getId());
+        Parametros parametros = parametrosConexao.capturarParametros(empresa.getIdEmpresa());
 
         do {
-            registro.capturarDados(notebook.getId(), empresa.getId());
+            registro.capturarDados(notebook.getIdNotebook(), empresa.getIdEmpresa());
+            parametros.alertar(registro.getUsoCpu(), registro.getUsoDisco(), registro.getUsoMemoriaRam());
 
             try {
                 TimeUnit.SECONDS.sleep(parametros.getTempoSegCapturaDeDados());
