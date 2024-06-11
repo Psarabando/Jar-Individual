@@ -7,7 +7,7 @@ import java.net.http.HttpResponse;
 public abstract class Slack {
     public static void EnviarAlertaSlack(String mensagemErro){
         // URL do webhook do Slack
-        final String slackWebhookUrl = "https://hooks.slack.com/services/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";
+        final String slackWebhookUrl = "https://hooks.slack.com/services/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";
 
         HttpClient client = HttpClient.newHttpClient();
 
