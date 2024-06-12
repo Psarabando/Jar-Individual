@@ -56,10 +56,24 @@ public class Registro {
         for (int i = 0; i < volumes.size(); i++){
             Double totalMemoria = volumes.get(i).getTotal() / Math.pow(1024,3);
             Double discoDisponivel = volumes.get(i).getDisponivel() / Math.pow(1024,3);
-            Double totalDisco = discos.get(i).getTamanho() / Math.pow(1024,3);
 
             usoDisco = Math.round(((((totalMemoria - discoDisponivel) * 100) / totalMemoria)));
 
+        }
+
+        List<Processo> processos = looca.getGrupoDeProcessos().getProcessos();
+        String listaProcessos = "";
+
+        for (int i = 0; i < processos.size(); i++){
+            String nomeProcessos = processos.get(i).getNome();
+            double usoMemoriaProcesso = (processos.get(i).getUsoMemoria());
+            double usoCpuProcesso = (processos.get(i).getUsoCpu());
+
+            listaProcessos += """
+                    Nome do Processo: %s
+                    Uso de memória: %.2f | Uso de CPU: %.2f
+                    =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                    """.formatted(nomeProcessos, usoMemoriaProcesso, usoCpuProcesso);
         }
 
         // Insert no mysql local
@@ -84,6 +98,9 @@ public class Registro {
         // Exibição dos dados na tela
 
         System.out.println(toString());
+
+        // Exibição dos dados de processos no console:
+        System.out.println(listaProcessos);
 
     }
 

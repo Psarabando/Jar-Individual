@@ -2,13 +2,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import com.github.britooo.looca.api.core.Looca;
+import com.github.britooo.looca.api.group.processos.Processo;
 import com.github.britooo.looca.api.group.sistema.Sistema;
+import com.github.britooo.looca.api.util.Conversor;
 import logs.Log;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlOutParameter;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,9 +23,7 @@ public class Main {
         JdbcTemplate con = conexao.getConexaoMySql();
         SuporteConexao suporteConexao = new SuporteConexao();
         NotebookConexao notebookConexao = new NotebookConexao();
-
         ConexaoSQL conexaoSQL = new ConexaoSQL();
-
 
         System.out.println("\n░▒█▀▀▀█░█▀▀▄░█▀▀▄░█▀▀▄░█▀▀▄░█▀▀▄░█▀▀▄░█▀▄░▄▀▀▄░▀▀█▀▀░█▀▀░█▀▄░█░░░\n" +
                 "░░▀▀▀▄▄░█▄▄█░█▄▄▀░█▄▄█░█▀▀▄░█▄▄█░█░▒█░█░█░█░░█░░▒█░░░█▀▀░█░░░█▀▀█\n" +
@@ -33,6 +35,10 @@ public class Main {
 
         String email;
         String senha;
+
+        System.out.println("\n░▒█░░░░▄▀▀▄░█▀▀▀░░▀░░█▀▀▄\n" +
+                "░▒█░░░░█░░█░█░▀▄░░█▀░█░▒█\n" +
+                "░▒█▄▄█░░▀▀░░▀▀▀▀░▀▀▀░▀░░▀\n");
 
         do {
             System.out.println("Insira seu email:");
@@ -105,6 +111,12 @@ public class Main {
 
         InfoNotebook infoNotebook = new InfoNotebook();
         infoNotebook.capturarInformacoesNotebook(notebook.getIdNotebook(), empresa.getIdEmpresa());
+
+        System.out.println(" ______________________ \n" +
+                "|  __________________  |\n" +
+                "| | Captura de dados | |\n" +
+                "| |__________________| |\n" +
+                "|______________________|\n");
 
         System.out.println("""
                 \nIremos iniciar o monitoramento
