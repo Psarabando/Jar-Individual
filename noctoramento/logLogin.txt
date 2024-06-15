@@ -142,3 +142,11 @@ Mensagem: Erro ao logar, e-mail ou senha incorretos
 Sistema Operacional: Windows
 Arquitetura: 64
 }
+{
+Data: 12/06/2024 18:13:52.346
+Log Level: ERROR
+Status Code: 401
+Mensagem: Erro ao logar, e-mail ou senha incorretos
+Sistema Operacional: Windows
+Arquitetura: 64
+}
